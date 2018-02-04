@@ -1,0 +1,36 @@
+<div class="main tweets-show">
+  <div class="container">
+    <div class="tweets-show-item">
+      <div class="tweet-user-name">
+        <img src="<%= "/user_images/#{@user.image_name}" %>">
+        <%= link_to(@user.name, "/users/#{@user.id}") %>
+      </div>
+      <p>
+        <%= @tweet.content %>
+      </p>
+      <div class="tweet-time">
+        <%= @tweet.created_at %>
+      </div>
+
+      <% if Thank.find_by(user_id: @current_user.id, tweet_id: @tweet.id) %>
+        <%= link_to("/thanks/#{@tweet.id}/destroy", {method: "post"}) do %>
+            <span class="fa fa-heart thank-btn-unlike"></span>
+        <% end %>
+      <% else %>
+        <%= link_to("/thanks/#{@tweet.id}/create", {method: "post"}) do %>
+            <span class="fa fa-heart thank-btn"></span>
+        <% end %>
+      <% end %>
+
+      <%= @thanks_count %>
+
+      <% if @tweet.user_id == @current_user.id %>
+      <div class="tweet-menus">
+        <%= link_to("編集", "/tweet/#{@tweet.id}/edit") %>
+
+        <%= link_to("削除","/tweet/#{@tweet.id}/destroy", {method:"past"}) %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
